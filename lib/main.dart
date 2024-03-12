@@ -234,7 +234,7 @@ class _UploadPageState extends State<UploadPage> {
 
   Future<void> _uploadImage() async {
     if (_image == null) return;
-    final uri = Uri.parse("http://192.168.1.4:5000/upload");
+    final uri = Uri.parse("http://192.168.1.2:5000/upload");
     final request = http.MultipartRequest('POST', uri)
       ..files.add(await http.MultipartFile.fromPath('image', _image!.path))
       ..fields['model'] = _model
