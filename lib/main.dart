@@ -1,207 +1,10 @@
-// // import 'package:flutter/material.dart';
-// // import 'package:image_picker/image_picker.dart';
-// // import 'dart:convert';
-// // import 'dart:io';
-// // import 'package:http/http.dart' as http;
-// //
-// // void main() {
-// //   runApp(const MyApp());
-// // }
-// //
-// // class MyApp extends StatelessWidget {
-// //   const MyApp({super.key});
-// //
-// //   // This widget is the root of your application.
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return MaterialApp(
-// //       title: 'Flutter Demo',
-// //       theme: ThemeData(
-// //         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-// //         useMaterial3: true,
-// //       ),
-// //       home: MyHomePage(title: 'Image upload to server'),
-// //     );
-// //   }
-// // }
-// //
-// // class MyHomePage extends StatefulWidget {
-// //   MyHomePage({Key? key, required this.title}) : super(key:key);
-// //
-// //   final String title;
-// //
-// //   @override
-// //   _MyHomePageState createState() => _MyHomePageState();
-// // }
-// //
-// // class _MyHomePageState extends State<MyHomePage> {
-// //   File? selectedImage;
-// //   String message = "";
-// //
-// //   uploadImage() async {
-// //     final request = http.MultipartRequest(
-// //         "POST", Uri.parse("https://cab8-124-43-246-34.ngrok-free.app/upload"));
-// //     final headers = {"Content-type": "multipart/form-data"};
-// //     request.files.add(
-// //       http.MultipartFile('image',
-// //           selectedImage!.readAsBytes().asStream(),selectedImage!.lengthSync(),
-// //           filename: selectedImage!.path.split("/").last));
-// //
-// //     request.headers.addAll(headers);
-// //     final response = await request.send();
-// //     http.Response res = await http.Response.fromStream(response);
-// //     final resJson = jsonDecode(res.body);
-// //     message = resJson['message'];
-// //     setState(() {
-// //     });
-// //   }
-// //
-// //   Future getImage() async{
-// //     // final pickedImage = await ImagePicker().getImage(source: ImageSource.gallery);
-// //     //final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
-// //     final pickedImage = await ImagePicker().pickImage(source: ImageSource.camera);
-// //     selectedImage = File(pickedImage!.path);
-// //     setState(() {});
-// //   }
-// //
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Scaffold(
-// //       appBar: AppBar(
-// //         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-// //       ),
-// //       body: Center(
-// //         child: Column(
-// //           mainAxisAlignment: MainAxisAlignment.center,
-// //           children: <Widget>[
-// //             selectedImage == null
-// //                 ? Text("Please pick an image to upload")
-// //                 : Image.file(selectedImage!),
-// //             TextButton.icon(
-// //               style: ButtonStyle(
-// //                 backgroundColor: MaterialStateProperty.all(Colors.blue)
-// //               ),
-// //                 onPressed: uploadImage,
-// //                 icon: Icon(Icons.upload_file),
-// //                 label: Text("upload", style: TextStyle(color: Colors.white),))
-// //           ],
-// //         ),
-// //       ),
-// //       floatingActionButton: FloatingActionButton(
-// //         onPressed:getImage,
-// //         child: Icon(Icons.add_a_photo),
-// //       ),// This trailing comma makes auto-formatting nicer for build methods.
-// //     );
-// //   }
-// // }
-//
+import 'package:camera/SplashScreen.dart';
 import 'package:camera/detected_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-//
-// void main() {
-//   runApp(const MyApp());
-// }
-//
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: MyHomePage(title: 'Image upload to server'),
-//     );
-//   }
-// }
-//
-// class MyHomePage extends StatefulWidget {
-//   MyHomePage({required this.title});
-//
-//   final String title;
-//
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-//
-// class _MyHomePageState extends State<MyHomePage> {
-//   File? selectedImage;
-//   String message = "";
-//   String extractedText = "";
-//
-//   uploadImage() async {
-//     final request = http.MultipartRequest(
-//         "POST", Uri.parse("https://b09f-112-134-246-69.ngrok-free.app/upload"));
-//     final headers = {"Content-type": "multipart/form-data"};
-//     request.files.add(
-//         http.MultipartFile('image',
-//             selectedImage!.readAsBytes().asStream(), selectedImage!.lengthSync(),
-//             filename: selectedImage!.path.split("/").last));
-//
-//     request.headers.addAll(headers);
-//     final response = await request.send();
-//     final resJson = jsonDecode(await response.stream.bytesToString());
-//     message = resJson['message'];
-//     extractedText = resJson['extracted_text'];
-//     setState(() {});
-//   }
-//
-//   Future getImage() async {
-//     final pickedImage =
-//     await ImagePicker().pickImage(source: ImageSource.camera);
-//     selectedImage = File(pickedImage!.path);
-//     setState(() {});
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(widget.title),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             selectedImage == null
-//                 ? Text("Please pick an image to upload")
-//                 : Flexible(
-//               child: Image.file(
-//                 selectedImage!,
-//                 fit: BoxFit.cover, // Adjust the fit property
-//               ),
-//             ),
-//             SizedBox(height: 20),
-//             Text(message),
-//             SizedBox(height: 20),
-//             Text(extractedText),
-//             SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: uploadImage,
-//               child: Text("Upload Image"),
-//             ),
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: getImage,
-//         child: Icon(Icons.camera_alt),
-//       ),
-//     );
-//   }
-// }
-//
-
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 void main() => runApp(MyApp());
 
@@ -226,6 +29,74 @@ class _UploadPageState extends State<UploadPage> {
   double _scale = 1.0;
 
   Future<void> _pickImage() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Choose Image Source'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    alignment: Alignment.center, // Center the text
+                    child: Text(
+                      "Capture Image",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    _captureImage();
+                  },
+                ),
+                Padding(padding: EdgeInsets.all(8.0)),
+                GestureDetector(
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Pick Image from Gallery",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    _pickImageFromGallery();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
+  Future<void> _captureImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  Future<void> _pickImageFromGallery() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = image;
@@ -250,9 +121,8 @@ class _UploadPageState extends State<UploadPage> {
     // In your uploadImage function, after receiving a successful response
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DetectedImagePage()),
+      MaterialPageRoute(builder: (context) => SplashPage()),
     );
-
   }
 
   @override
@@ -280,5 +150,3 @@ class _UploadPageState extends State<UploadPage> {
     );
   }
 }
-
-
